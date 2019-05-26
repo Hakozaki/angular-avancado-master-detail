@@ -17,7 +17,7 @@
 </div>
 
 <!-- FORM -->
-<form>
+<form [formGroup]="categoriaForm">
   <!-- CARD -->
   <div class="card">
     <!--CABEÇALHO-->
@@ -37,8 +37,10 @@
           <input type="text" class="form-control" id="descricao">
         </div>
       </div>
+
       <button type="submit" class="btn btn-primary float-right">Salvar</button>
       <button routerLink="/categorias" type="button" class="btn btn-light float-right">Voltar</button>
+
     </div>
 
   </div>
