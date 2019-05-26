@@ -24,19 +24,25 @@
   <thead>
     <tr class="text-light bg-primary">
       <th>Categoria</th>
+      <th>Descrição</th>
       <th>Ações</th>
     </tr>
   </thead>
 
   <tbody>
-    <td>
-      <strong>Lazer</strong><br>
-      <small>Cimena , parque , praia</small>
-    </td>
-    <td>
-      <button type="button" [routerLink]="[12, 'edit']" class="btn btn-outline-info mr-1">Editar</button>
-      <button type="button" (click)="alert('AZEDOU')" class="btn btn-outline-danger">Editar</button>
-    </td>
+    <tr *ngFor="let categoria of categorias">
+      <td>
+        <strong>{{ categoria.nome }}</strong>
+      </td>
+      <td>
+        {{ categoria.descricao }}
+      </td>
+      <td>
+        <button type="button" [routerLink]="[categoria.id, 'edit']" class="btn btn-outline-info mr-1">Editar</button>
+        <button type="button" (click)="deleteCategoria(categoria)" class="btn btn-outline-danger">Excluir</button>
+      </td>
+    </tr>
+
   </tbody>
 
 </table>

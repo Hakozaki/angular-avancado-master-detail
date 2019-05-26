@@ -10,7 +10,7 @@ import { Categoria } from './categoria.model';
 })
 export class CategoriaService {
 
-  private api: string = "https://localhost:8000/api/categorias";
+  private api: string = "http://localhost:8000/api/categorias";
 
   constructor(private http: HttpClient) { }
 
@@ -55,12 +55,10 @@ export class CategoriaService {
     )
   }
 
-
-
-
   //METODOS PRIVADOS
   private jsonDataToCategorias(jsonData: any[]): Categoria[] {
     const categorias: Categoria[] = [];
+
     jsonData.forEach(element => categorias.push(element as Categoria));
     return categorias;
   }
