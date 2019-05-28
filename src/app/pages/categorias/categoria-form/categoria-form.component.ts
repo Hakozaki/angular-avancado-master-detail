@@ -39,6 +39,18 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
     this.setPageTitle();
   }
 
+  submitForm() {
+    this.submittingForm = true;
+
+    if (this.currentAction == 'novo') {
+      this.createCategoria();
+    } else {
+      this.updateCategoria();
+    }
+  }
+
+
+
   //METODOS PRIVADOS
   private setCurrentAction() {
     if (this.route.snapshot.url[0].path == "novo") {
@@ -51,7 +63,7 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
   private buildForm() {
     this.categoriaForm = this.formBuilder.group({
       id: [null],
-      nome: [null, Validators.required, Validators.minLength(2)],
+      nome: [null, [Validators.required, Validators.minLength(3)]],
       descricao: [null]
     });
   }
@@ -79,6 +91,40 @@ export class CategoriaFormComponent implements OnInit, AfterContentChecked {
       const catNome = this.categoria.nome || ""
       this.pageTitle = `Editando categoria: ${catNome}`
     }
+  }
+
+  private createCategoria() {
+    const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm.value);
+
+    this.categoriaServcice.store(categoria)
+      .subscribe(
+        (categoria) => this.actionForSucess(categoria),
+        (error) => this.actionForError(error)
+      );
+  }
+
+  private updateCategoria() {
+    const categoria: Categoria = Object.assign(new Categoria(), this.categoriaForm.value);
+
+    this.categoriaServcice.update(categoria)
+      .subscribe(
+        (categoria) => this.actionForSucess(categoria),
+        (error) => this.actionForError(error)
+      )
+  }
+
+  private actionForSucess(categoria: Categoria) {
+    toastr.success("Objeto salvo");
+    this.router.navigateByUrl("categorias", { skipLocationChange: true })
+      .then(
+        () => this.router.navigate(["categorias", categoria.id, "edit"])
+      );
+  }
+
+  private actionForError(error: any) {
+    toastr.error("Objeto salvo");
+    this.submittingForm = false;
+
   }
 }
 

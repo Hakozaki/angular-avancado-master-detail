@@ -58,13 +58,12 @@ export class CategoriaService {
   //METODOS PRIVADOS
   private jsonDataToCategorias(jsonData: any[]): Categoria[] {
     const categorias: Categoria[] = [];
-
-    jsonData.forEach(element => categorias.push(element as Categoria));
+    jsonData['response'].forEach(element => categorias.push(element as Categoria));
     return categorias;
   }
 
   private jsonDataToCategoria(jsonData: any): Categoria {
-    return jsonData as Categoria;
+    return jsonData['response'] as Categoria;
   }
 
   private handleError(erro: any): Observable<any> {
